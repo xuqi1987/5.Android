@@ -18,9 +18,9 @@ import java.io.IOException;
 public class MainActivity extends Activity implements View.OnClickListener, ServiceConnection {
 
     TextView tvStatus = null;
-    IBinder binder = null;
+    CheckStateService.Binder binder = null;
 
-    private MediaPlayer mp =null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,10 +68,14 @@ public class MainActivity extends Activity implements View.OnClickListener, Serv
 
                 break;
             case R.id.play:
-                this.play();
+                if(binder!=null){
+                    binder.play();
+                }
                 break;
             case R.id.stopplay:
-                this.stop();
+                if(binder!=null) {
+                    binder.stopplay();
+                }
                 break;
             default:
                 break;
@@ -96,36 +100,5 @@ public class MainActivity extends Activity implements View.OnClickListener, Serv
 
     }
 
-    private void play(){
-        System.out.println("Play");
-        if(mp != null) {
-            mp.reset();
-        }
 
-
-        mp = MediaPlayer.create(this, R.raw.cry);
-
-        try {
-            //mp.prepare();
-            mp.start();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        }
-        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                mp.release();
-            }
-        });
-    }
-
-    private void stop(){
-        System.out.println("stop");
-        if(mp !=null) {
-            mp.stop();
-
-        }
-    }
 }

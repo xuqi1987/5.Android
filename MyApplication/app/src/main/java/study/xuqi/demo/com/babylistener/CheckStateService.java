@@ -2,10 +2,14 @@ package study.xuqi.demo.com.babylistener;
 
 import android.app.Service;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.IBinder;
 
 public class CheckStateService extends Service {
     private boolean isRunning = false;
+    private MediaPlayer mp =null;
+
+
     public CheckStateService() {
     }
 
@@ -20,6 +24,17 @@ public class CheckStateService extends Service {
         public void setData(String data) {
             System.out.println("Binder 设置数据");
         }
+
+        public void stopplay(){
+            CheckStateService.this.stopSound();
+        }
+
+        public void play() {
+            CheckStateService.this.playSound();
+        }
+
+
+
     }
 
     @Override
@@ -52,10 +67,10 @@ public class CheckStateService extends Service {
                 int i =0;
                 while(isRunning) {
                     i++;
-
+                    NetUtil.test();
                     System.out.println("hello");
                     try {
-                        sleep(1000);
+                        sleep(2000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -67,6 +82,37 @@ public class CheckStateService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
+    private void playSound(){
+        System.out.println("Play");
+        if(mp != null) {
+            mp.reset();
+        }
 
+
+        mp = MediaPlayer.create(this, R.raw.cry);
+
+        try {
+            //mp.prepare();
+            mp.start();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp.release();
+            }
+        });
+    }
+
+    private void stopSound(){
+        System.out.println("stop");
+        if(mp !=null) {
+            mp.stop();
+
+        }
+    }
 
 }
