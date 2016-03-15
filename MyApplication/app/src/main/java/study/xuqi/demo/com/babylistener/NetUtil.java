@@ -12,8 +12,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
-
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by xuqi on 16/3/14.
@@ -31,10 +33,12 @@ public class NetUtil {
 
     public static void test() {
         String result = null;
-        String url = "http://www.baidu.com";
+        String url = "http://120.24.161.10:8080/sound";
         Map params = new HashMap();//请求参数
         try  {
             result = net(url,params,"GET");
+            Map data = toMap(result);
+            System.out.println(data.get("id"));
             System.out.println(result);
         }catch (Exception e) {
             e.printStackTrace();
@@ -144,5 +148,32 @@ public class NetUtil {
             }
         }
         return sb.toString();
+    }
+
+
+    /**
+     * 将Json对象转换成Map
+     *
+     * @return Map对象
+     * @throws JSONException
+     */
+    public static Map toMap(String jsonString) throws JSONException {
+
+        JSONObject jsonObject = new JSONObject(jsonString);
+
+        Map result = new HashMap();
+        Iterator iterator = jsonObject.keys();
+        String key = null;
+        String value = null;
+
+        while (iterator.hasNext()) {
+
+            key = (String) iterator.next();
+            value = jsonObject.getString(key);
+            result.put(key, value);
+
+        }
+        return result;
+
     }
 }

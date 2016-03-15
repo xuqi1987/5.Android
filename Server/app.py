@@ -7,7 +7,6 @@ def hello_world():
 
 @app.route('/sound')
 def sound():
-
     return jsonify(id=1)
 
 if __name__ == '__main__':
