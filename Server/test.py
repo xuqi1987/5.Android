@@ -7,7 +7,7 @@ se = Sensor()
 se.setup()
 try:
     while True:
-    #print se.get()
+        se.get()
         time.sleep(1)
 except KeyboardInterrupt:
     se.destory()
