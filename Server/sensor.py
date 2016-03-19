@@ -32,9 +32,9 @@ class Sensor:
 
                 l.append('ON')
 
-        print ("%s / %s ")%(l.count(),max_num)
+        print ("%s / %s ")%(len(l),max_num)
 
-        if l.count() > (max_num /2):
+        if len(l)> (max_num /2):
             self.cry = True
             print "Baby maybe crying~"
 
