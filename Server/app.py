@@ -15,4 +15,8 @@ def sound():
 
     pass
 if __name__ == '__main__':
-    app.run(host="0.0.0.0",port=80)
+    try:
+        app.run(host="0.0.0.0",port=80)
+    except KeyboardInterrupt:
+        print "KeyboardInterrupt"
+        se.destory()

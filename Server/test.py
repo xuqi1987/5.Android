@@ -5,7 +5,9 @@ from sensor import Sensor
 import time
 se = Sensor()
 se.setup()
-
-while True:
+try:
+    while True:
     #print se.get()
-    time.sleep(0.1)
+        time.sleep(1)
+except KeyboardInterrupt:
+    se.destory()
