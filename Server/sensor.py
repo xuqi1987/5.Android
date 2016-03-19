@@ -8,7 +8,7 @@ class Sensor:
         self.value = 0
         self.start = 0
         self.count = 0
-
+        GPIO.cleanup()
         pass
 
     def setup(self):
