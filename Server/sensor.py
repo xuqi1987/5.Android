@@ -21,7 +21,7 @@ class Sensor:
         pass
 
     def get(self):
-        self.cout = self.count + 1
+        self.count = self.count + 1
         ret = False
 
         if (GPIO.input(14) == GPIO.HIGH):
@@ -36,7 +36,7 @@ class Sensor:
         else:
             ret = False
 
-        if self.count > 10:
+        if self.count > 15:
             print "Clear"
             self.count = 0
             self.value = 0
