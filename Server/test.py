@@ -7,5 +7,5 @@ se = Sensor()
 se.setup()
 
 while True:
-    print se.get()
-    time.sleep(1)
+    #print se.get()
+    time.sleep(0.1)

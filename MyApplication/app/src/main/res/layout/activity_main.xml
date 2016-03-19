@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/editText"
             android:layout_gravity="center_horizontal"
-            android:text="http://120.24.161.10:8080/sound" />
+            android:text="http://xuqi.wicp.net/sound" />
 
         <LinearLayout
             android:layout_width="match_parent"
