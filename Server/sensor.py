@@ -23,13 +23,22 @@ class Sensor:
         self.count = self.count + 1
         ret = False
 
-        if (GPIO.input(14) == GPIO.HIGH):
+        # 减少误差
+        avg = 0
+        for i in  range(10):
+
+            if (GPIO.input(14) == GPIO.HIGH):
+
+                print "ON"
+                avg = avg + 1
+            else:
+                avg = avg - 1
+                print "OFF"
+
+        if avg > 0:
             self.value = self.value + 1
-            print "ON"
-        else:
-            print "OFF"
 
-
+        # 这么做也是为了减少误差
         if self.value > 3:
             ret = True
         else:
