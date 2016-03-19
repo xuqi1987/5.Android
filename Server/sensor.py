@@ -13,7 +13,7 @@ class Sensor:
 
     def setup(self):
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(14,GPIO.IN,initial=GPIO.LOW)
+        GPIO.setup(14,GPIO.IN)
         pass
 
     def destory(self):

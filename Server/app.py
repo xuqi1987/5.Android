@@ -9,6 +9,7 @@ app = Flask(__name__)
 
 @app.route('/sound')
 def sound():
+    Se.setup()
     return jsonify(id=Se.get())
 
     pass
