@@ -1,9 +1,11 @@
 #! /usr/bin/python
 # -*- coding:utf-8 -*-
-from sensor import Sensor as Se
+from sensor import Sensor
+
 import time
-Se.setup()
+se = Sensor()
+se.setup()
 
 while True:
-    print Se.get()
+    print se.get()
     time.sleep(1)

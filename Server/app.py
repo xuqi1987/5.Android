@@ -3,13 +3,14 @@
 
 
 from flask import Flask,jsonify
-from sensor import Sensor as Se
+from sensor import Sensor
 
 app = Flask(__name__)
+se = Sensor()
 
 @app.route('/sound')
 def sound():
-    Se.setup()
+    se.setup()
     return jsonify(id=Se.get())
 
     pass
