@@ -5,7 +5,7 @@ import time
 
 class Sensor:
     def __init__(self):
-        self.value = 0
+        self.cry = False
         self.start = 0
         self.count = 0
         pass
@@ -24,38 +24,27 @@ class Sensor:
         ret = False
 
         # 减少误差
-        avg = 0
+        max_num = 1000
         l = []
-
-
-        for i in range(100):
+        for i in range(max_num):
 
             if (GPIO.input(14) == GPIO.HIGH):
 
                 l.append('ON')
-                avg = avg + 1
-            else:
-                avg = avg - 1
 
-        print l
+        print ("%s / %s ")%(l.count(),max_num)
 
-        if avg > 0:
-
-            self.value = self.value + 1
+        if l.count() > (max_num /2):
+            self.cry = True
             print "Baby maybe crying~"
 
-        # 这么做也是为了减少误差
-        if self.value > 3:
-            ret = True
-        else:
-            ret = False
 
-        if self.count > 15:
+        if self.count > 5:
             print "Clear"
             self.count = 0
-            self.value = 0
+            self.cry = False
 
-        return ret
+        return self.cry
 
 
 
