@@ -26,6 +26,10 @@ class Sensor:
 
         if (GPIO.input(14) == GPIO.HIGH):
             self.value = self.value + 1
+            print "ON"
+        else:
+            print "OFF"
+
 
         if self.value > 3:
             ret = True
@@ -33,6 +37,7 @@ class Sensor:
             ret = False
 
         if self.count > 10:
+            print "Clear"
             self.count = 0
             self.value = 0
 
