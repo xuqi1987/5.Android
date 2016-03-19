@@ -26,8 +26,9 @@ class Sensor:
         # 减少误差
         avg = 0
         l = []
-        for i in  range(5):
 
+
+        for i in range(100):
 
             if (GPIO.input(14) == GPIO.HIGH):
 
@@ -36,11 +37,8 @@ class Sensor:
             else:
                 avg = avg - 1
 
-            time.sleep(0.1)
-
-
         print l
-        
+
         if avg > 0:
 
             self.value = self.value + 1
