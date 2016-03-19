@@ -1,13 +1,16 @@
-from flask import Flask,jsonify
-app = Flask(__name__)
+#! /usr/bin/python
+# -*- coding:utf-8 -*-
 
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
+
+from flask import Flask,jsonify
+from sensor import Sensor as Se
+
+app = Flask(__name__)
 
 @app.route('/sound')
 def sound():
-    return jsonify(id=1)
+    return jsonify(id=Se.get())
 
+    pass
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port=8080)

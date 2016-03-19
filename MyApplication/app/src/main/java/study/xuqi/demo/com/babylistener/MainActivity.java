@@ -11,15 +11,19 @@ import android.os.IBinder;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class MainActivity extends Activity implements View.OnClickListener, ServiceConnection {
 
     TextView tvStatus = null;
     CheckStateService.Binder binder = null;
-
+    EditText et = null;
+    ImageView iv = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +32,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Serv
 
         findViewById(R.id.start).setOnClickListener(this);
         findViewById(R.id.stop).setOnClickListener(this);
-        findViewById(R.id.play).setOnClickListener(this);
-        findViewById(R.id.stopplay).setOnClickListener(this);
 
         tvStatus = (TextView) findViewById(R.id.status);
+        et = (EditText)findViewById(R.id.editText);
+        iv = (ImageView)findViewById(R.id.imageView);
 
     }
 
@@ -39,22 +43,32 @@ public class MainActivity extends Activity implements View.OnClickListener, Serv
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.start:
+                iv.setVisibility(View.VISIBLE);
 
                 System.out.println("start service");
-                tvStatus.setText("start");
+                tvStatus.setText("Start");
+
                 startService(new Intent(MainActivity.this, CheckStateService.class));
 
                 if (binder == null) {
                     System.out.println("bind service");
-                    bindService(new Intent(MainActivity.this, CheckStateService.class), this, Context.BIND_AUTO_CREATE);
+                    Intent intent = new Intent(MainActivity.this, CheckStateService.class);
+                    intent.putExtra("msg",et.getText().toString());
+                    bindService(intent, this, Context.BIND_AUTO_CREATE);
                 }else
                 {
                     System.out.println("已经绑定，不用再绑");
                 }
                 break;
+
             case R.id.stop:
+                iv.setVisibility(View.INVISIBLE);
                 System.out.println("stop");
-                tvStatus.setText("stop");
+                tvStatus.setText("Stop");
+
+                if(binder!=null) {
+                    binder.stopplay();
+                }
 
                 // 必须判断是否绑定，没有绑定的话，就去解绑会挂掉。
                 if(binder != null) {
@@ -66,16 +80,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Serv
                 }
                 stopService(new Intent(MainActivity.this,CheckStateService.class));
 
-                break;
-            case R.id.play:
-                if(binder!=null){
-                    binder.play();
-                }
-                break;
-            case R.id.stopplay:
-                if(binder!=null) {
-                    binder.stopplay();
-                }
                 break;
             default:
                 break;

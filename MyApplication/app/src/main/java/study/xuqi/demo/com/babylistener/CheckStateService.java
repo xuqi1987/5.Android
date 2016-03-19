@@ -5,18 +5,20 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 
+import java.util.Map;
+
 public class CheckStateService extends Service {
     private boolean isRunning = false;
     private MediaPlayer mp =null;
-
-
+    private String url = "";
+    private boolean playsound = false;
     public CheckStateService() {
     }
 
     @Override
     public IBinder onBind(Intent intent) {
         System.out.println("绑定");
-
+        url = intent.getExtras().getString("msg");
         return new Binder();
     }
 
@@ -34,13 +36,13 @@ public class CheckStateService extends Service {
         }
 
 
-
     }
 
     @Override
     public void onCreate() {
         System.out.println("onCreate");
         isRunning = true;
+
         super.onCreate();
     }
 
@@ -59,16 +61,29 @@ public class CheckStateService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        System.out.println("onStartCommand");
         new Thread() {
-
             @Override
             public void run() {
                 super.run();
                 int i =0;
                 while(isRunning) {
                     i++;
-                    NetUtil.test();
-                    System.out.println("hello");
+
+                    Map map = NetUtil.checkPi(url);
+                    String st = map.get("id").toString();
+
+                    if (st.equals("True")) {
+                        if (!playsound) {
+                            playSound();
+                            playsound = true;
+                        }
+                    }
+                    else {
+                        stopSound();
+                        playsound = false;
+                    }
+                    //System.out.println("hello");
                     try {
                         sleep(2000);
                     } catch (InterruptedException e) {
