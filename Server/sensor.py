@@ -40,7 +40,7 @@ class Sensor:
 
 
         print l
-        l.clear
+        
         if avg > 0:
 
             self.value = self.value + 1
