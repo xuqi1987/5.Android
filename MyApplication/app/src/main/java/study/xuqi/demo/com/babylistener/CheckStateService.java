@@ -71,24 +71,25 @@ public class CheckStateService extends Service {
                     i++;
 
                     Map map = NetUtil.checkPi(url);
-                    String st = map.get("id").toString();
 
+                    String st = map.get("id").toString();
                     if (st.equals("true")) {
                         if (!playsound) {
                             playSound();
                             playsound = true;
                         }
-                    }
-                    else {
+                    } else {
                         stopSound();
                         playsound = false;
                     }
+
                     //System.out.println("hello");
                     try {
                         sleep(2000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+
                 }
 
 

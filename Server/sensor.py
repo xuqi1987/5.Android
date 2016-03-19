@@ -25,19 +25,24 @@ class Sensor:
 
         # 减少误差
         avg = 0
-        for i in  range(5):
+        for i in  range(9):
 
+            l = []
             if (GPIO.input(14) == GPIO.HIGH):
 
-                print "ON"
+                l.append('ON')
                 avg = avg + 1
             else:
                 avg = avg - 1
-                print "OFF"
+                l.append('OFF')
+            time.sleep(0.1)
 
 
+        print l
         if avg > 0:
+
             self.value = self.value + 1
+            print "Baby maybe crying~"
 
         # 这么做也是为了减少误差
         if self.value > 3:
