@@ -24,7 +24,7 @@ class Sensor:
         ret = False
 
         # 减少误差
-        max_num = 1000
+        max_num = 2000
         l = []
         for i in range(max_num):
 
@@ -34,7 +34,7 @@ class Sensor:
 
         print ("%s / %s ")%(len(l),max_num)
 
-        if len(l)> (max_num /2):
+        if len(l)> (800):
             self.cry = True
             print "Baby maybe crying~"
 
